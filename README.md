@@ -86,28 +86,50 @@ public class BatchJob implements Job {
 2. Configure application-batch-config.yml with your desired schedule
 3. Run the application:
 ```bash
-./mvnw spring-boot:run
+./gradlew bootRun
 ```
 
 ## Dependencies
 
-Add these dependencies to your `pom.xml`:
-```xml
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.quartz-scheduler</groupId>
-        <artifactId>quartz</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.projectlombok</groupId>
-        <artifactId>lombok</artifactId>
-        <optional>true</optional>
-    </dependency>
-</dependencies>
+Add these configurations to your `build.gradle`:
+```gradle
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.quartz-scheduler:quartz:2.3.2'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
 ```
 
 ## Common Issues
@@ -120,6 +142,34 @@ Add these dependencies to your `pom.xml`:
    - Ensure individual job is enabled in configuration
    - Verify cron expression syntax
    - Check if BatchConfig is properly injected into JobDataMap
+
+## License
+
+This project is licensed under the MIT License - see below for details:
+
+```
+MIT License
+
+Copyright (c) 2024 [Your Name]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
 
 ## Contributing
 
