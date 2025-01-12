@@ -1,6 +1,6 @@
 # Spring Boot Quartz Scheduler Example
 
-This project demonstrates how to implement a Quartz Scheduler in a Spring Boot application with a simple batch job configuration.
+Spring Boot project using Quartz Scheduler. It shows how to configure and run batch jobs.
 
 ## Features
 
