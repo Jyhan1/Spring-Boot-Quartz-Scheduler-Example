@@ -1,0 +1,7 @@
+batch:
+  scheduler:
+    enabled: true
+    jobs:
+      batch-job:
+        enabled: true
+        schedule: 0 0/1 * * * ? #1분마다
